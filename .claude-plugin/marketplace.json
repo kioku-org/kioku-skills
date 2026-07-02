@@ -1,0 +1,18 @@
+{
+  "name": "kioku-skills",
+  "owner": {
+    "name": "Kioku"
+  },
+  "description": "Agent Skills for the kioku CLI",
+  "plugins": [
+    {
+      "name": "kioku",
+      "source": {
+        "source": "github",
+        "repo": "kioku-org/kioku-skills"
+      },
+      "description": "Install, sign in to, and drive the kioku CLI — search meeting notes/docs, join/track meetings, check calendar, manage workspaces, and connect Kioku's MCP server.",
+      "version": "0.1.0"
+    }
+  ]
+}

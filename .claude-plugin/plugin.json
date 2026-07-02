@@ -1,0 +1,11 @@
+{
+  "name": "kioku",
+  "description": "Install, sign in to, and drive the kioku CLI — search meeting notes/docs, join/track meetings, check calendar, manage workspaces, and connect Kioku's MCP server.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Kioku"
+  },
+  "homepage": "https://github.com/kioku-org/kioku-skills",
+  "repository": "https://github.com/kioku-org/kioku-skills",
+  "license": "MIT"
+}
