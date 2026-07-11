@@ -67,8 +67,8 @@ All of these operate on the user's **active workspace** (see Workspaces below) u
 
 - `kioku search "<query>" [--limit N]` — semantic search over the workspace's knowledge base
   (meeting transcripts, uploaded docs, indexed coding sessions). Default limit 5.
-- `kioku docs [PATH]` — bare: list documents. With a file path: upload it (PDF only) for
-  indexing. `--delete <id-or-prefix>` removes one.
+- `kioku docs [PATH]` — bare: list documents. With a file path: upload it (PDF, DOCX, PPTX,
+  TXT, or MD) for indexing. `--delete <id-or-prefix>` removes one.
 - `kioku meet [LINK]` — bare: list currently-running meeting bots. With a Google Meet/Teams/Zoom
   link: joins it (spins up a bot that records + transcribes). `--kill <id-or-prefix>` stops a
   running bot. `--transcript <meeting-id>` prints a meeting's transcript.
