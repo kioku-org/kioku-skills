@@ -1,7 +1,7 @@
 {
   "name": "kioku",
-  "description": "Install, sign in to, and drive the kioku CLI — search meeting notes/docs, join/track meetings, check calendar, manage workspaces, and connect Kioku's MCP server.",
-  "version": "0.1.0",
+  "description": "Install, sign in to, and drive the kioku CLI \u2014 search meeting notes/docs, join/track meetings, check calendar, manage workspaces, and connect Kioku's MCP server.",
+  "version": "0.1.1",
   "author": {
     "name": "Kioku"
   },

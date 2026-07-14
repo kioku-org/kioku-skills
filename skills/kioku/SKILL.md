@@ -14,17 +14,17 @@ formatted text output when scripting or when you (the agent) need to read the re
 
 ## Install
 
-Releases are published at https://github.com/kioku-org/kioku/releases. As of the `karasu`
-(v0.1.0) release, only a `x86_64-unknown-linux-gnu` binary is published.
+Use the installer — it resolves the latest GitHub release (only
+`x86_64-unknown-linux-gnu` binaries are published as of v0.1.2):
 
 ```bash
-curl -fsSL -o kioku.tar.gz \
-  https://github.com/kioku-org/kioku/releases/latest/download/kioku-v0.1.0-x86_64-unknown-linux-gnu.tar.gz
-tar -xzf kioku.tar.gz
-chmod +x kioku
-mv kioku ~/.local/bin/   # or anywhere on $PATH
+curl -fsSL https://kioku.chat/install.sh | sh
 kioku --version
 ```
+
+Pin a specific release (including `cli/vX.Y.Z-dev.N` pre-releases) with
+`KIOKU_VERSION=<tag>` before the command. Note: the v0.1.2 binary self-reports
+`kioku 0.1.0` — known cosmetic issue, don't treat it as a failed install.
 
 If the user is on macOS, Windows, or another architecture with no published binary, build from
 source instead (needs a Rust toolchain):
@@ -61,6 +61,11 @@ email, role, workspace_id/name/slug, server; deliberately excludes the token its
 
 `kioku signout` clears the stored credentials.
 
+Troubleshooting: if every authenticated command suddenly errors `404 Not Found`, the stored
+session (`~/.config/kioku/auth.json`) likely points at a server that no longer exists — signin
+records the server, and in CLI ≤ v0.1.2 that stored value silently wins over `--server`. Fix
+with `kioku signout && kioku signin`.
+
 ## Core commands
 
 All of these operate on the user's **active workspace** (see Workspaces below) unless noted.
@@ -71,7 +76,12 @@ All of these operate on the user's **active workspace** (see Workspaces below) u
   TXT, or MD) for indexing. `--delete <id-or-prefix>` removes one.
 - `kioku meet [LINK]` — bare: list currently-running meeting bots. With a Google Meet/Teams/Zoom
   link: joins it (spins up a bot that records + transcribes). `--kill <id-or-prefix>` stops a
-  running bot. `--transcript <meeting-id>` prints a meeting's transcript.
+  running bot. `--transcript <meeting-id>` prints a finished meeting's transcript — the id is
+  the knowledge-base meeting **UUID**, not the dashboard's numeric id or the meet code; find it
+  in `kioku --json search "<something said>"` results under `meeting.id`.
+  `--transcript <meet-code> --follow` (releases after v0.1.2) streams a **live** meeting's
+  transcript to the terminal as segments confirm, exiting when the bot leaves — here the id is
+  the meet code shown by bare `kioku meet` (e.g. `abc-defg-hij`), and `--json` emits NDJSON.
 - `kioku cal [--week] [--date DD/MM/YYYY]` — lists Google Calendar meetings for today (default),
   the coming week, or a specific date. First run transparently walks the user through connecting
   Calendar access (separate consent from the main kioku signin) — again, interactive, hand off
