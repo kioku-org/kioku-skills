@@ -68,16 +68,6 @@ Claude Code each use their plugin installation commands above.
 Once installed, just ask your agent to install/use kioku (e.g. "install the kioku CLI and sign
 me in", "search my meeting notes for X") — the skill triggers automatically.
 
-## Maintaining the Codex package
-
-The root skill remains the source of truth for Claude Code and OpenCode. After changing it, sync
-the packaged Codex copy and verify they match:
-
-```bash
-sh scripts/sync-codex-skill.sh
-sh scripts/sync-codex-skill.sh --check
-```
-
 ## License
 
 MIT — see [LICENSE](LICENSE).

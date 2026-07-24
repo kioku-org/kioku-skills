@@ -8,7 +8,7 @@
       "name": "kioku",
       "source": {
         "source": "local",
-        "path": "./plugins/kioku"
+        "path": "./"
       },
       "policy": {
         "installation": "AVAILABLE",
