@@ -8,9 +8,27 @@ docs, calendar, workspaces) without you having to explain it every time.
 
 `skills/kioku/SKILL.md` uses the [Agent Skills](https://code.claude.com/docs/en/skills) format,
 which both **Claude Code** and **OpenCode** read natively from the same path — no conversion or
-per-tool copies needed.
+per-tool copies needed. **Codex CLI** installs the same skill through the repository's Codex
+plugin marketplace.
 
 ## Install
+
+### Codex CLI — as a plugin (recommended)
+
+Add this GitHub repository as a Codex marketplace, then install Kioku from it:
+
+```bash
+codex plugin marketplace add kioku-org/kioku-skills
+codex plugin add kioku@kioku-skills
+```
+
+Start a new Codex thread after installing so the Kioku skill is loaded. To fetch and install future
+releases:
+
+```bash
+codex plugin marketplace upgrade kioku-skills
+codex plugin add kioku@kioku-skills
+```
 
 ### Claude Code — as a plugin (recommended)
 
@@ -44,11 +62,21 @@ cp -r /tmp/kioku-skills/skills/kioku .claude/skills/kioku
 
 OpenCode reads the same `.claude/skills/<name>/SKILL.md` path (also `.opencode/skills/` and
 `.agents/skills/`, project or `~/.config/opencode/` global) — `~/.claude/skills/kioku` or
-`.claude/skills/kioku` work for both tools as-is. The plugin/marketplace install path above is
-Claude Code–only; OpenCode users should use manual copy.
+`.claude/skills/kioku` work for both tools as-is. OpenCode users should use manual copy; Codex and
+Claude Code each use their plugin installation commands above.
 
 Once installed, just ask your agent to install/use kioku (e.g. "install the kioku CLI and sign
 me in", "search my meeting notes for X") — the skill triggers automatically.
+
+## Maintaining the Codex package
+
+The root skill remains the source of truth for Claude Code and OpenCode. After changing it, sync
+the packaged Codex copy and verify they match:
+
+```bash
+sh scripts/sync-codex-skill.sh
+sh scripts/sync-codex-skill.sh --check
+```
 
 ## License
 

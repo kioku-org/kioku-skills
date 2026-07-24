@@ -1,0 +1,37 @@
+{
+  "name": "kioku",
+  "version": "0.1.1",
+  "description": "Install, sign in to, and use the Kioku CLI for meetings, documents, calendars, workspaces, and knowledge search.",
+  "author": {
+    "name": "Kioku",
+    "url": "https://kioku.chat"
+  },
+  "homepage": "https://github.com/kioku-org/kioku-skills",
+  "repository": "https://github.com/kioku-org/kioku-skills",
+  "license": "MIT",
+  "keywords": [
+    "kioku",
+    "meetings",
+    "transcription",
+    "knowledge",
+    "cli"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Kioku",
+    "shortDescription": "Use Kioku meetings and knowledge from Codex.",
+    "longDescription": "Install and operate the Kioku CLI from Codex to search meeting transcripts and documents, manage meeting bots, check calendars, and work across Kioku workspaces.",
+    "developerName": "Kioku",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://kioku.chat",
+    "defaultPrompt": [
+      "Install the Kioku CLI and help me sign in.",
+      "Search my Kioku meeting notes for a topic.",
+      "Join a meeting with Kioku and follow its transcript."
+    ]
+  }
+}
