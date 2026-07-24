@@ -1,6 +1,6 @@
 ---
 name: kioku
-description: Use when the user wants to install, set up, or use the kioku CLI — Kioku's context/knowledge infrastructure for meetings, docs, and AI agents. Triggers on requests to install kioku, sign in to kioku, search meeting notes/transcripts/knowledge base, join/list/kill meeting bots, check Google Calendar via kioku, upload/list/delete documents, manage workspaces or invite teammates, manage API keys, or connect Kioku's MCP server to an AI client (Claude, Cursor, etc.). Also triggers when troubleshooting a `kioku: command not found` or similar kioku CLI error.
+description: "Use when the user wants to install, set up, or use the kioku CLI — Kioku's context/knowledge infrastructure for meetings, docs, and AI agents. Triggers on requests to install kioku, sign in to kioku, search meeting notes/transcripts/knowledge base, join/list/kill meeting bots, check Google Calendar via kioku, upload/list/delete documents, manage workspaces or invite teammates, manage API keys, or connect Kioku's MCP server to an AI client (Claude, Cursor, etc.). Also triggers when troubleshooting a `kioku: command not found` or similar kioku CLI error."
 ---
 
 # kioku
