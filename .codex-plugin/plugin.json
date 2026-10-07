@@ -1,6 +1,6 @@
 {
   "name": "kioku",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Install, sign in to, and use the Kioku CLI for meetings, documents, calendars, workspaces, and knowledge search.",
   "author": {
     "name": "Kioku",

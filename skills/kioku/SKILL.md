@@ -22,8 +22,14 @@ curl -fsSL https://kioku.chat/install.sh | sh
 kioku --version
 ```
 
-Pin a specific release (including `cli/vX.Y.Z-dev.N` pre-releases) with
-`KIOKU_VERSION=<tag>` before the command. Note: the v0.1.2 binary self-reports
+Pin a specific release (including `cli/vX.Y.Z-dev.N` pre-releases) by passing
+`KIOKU_VERSION` to the installer shell, rather than to `curl`:
+
+```bash
+curl -fsSL https://kioku.chat/install.sh | KIOKU_VERSION=<tag> sh
+```
+
+Note: the v0.1.2 binary self-reports
 `kioku 0.1.0` — known cosmetic issue, don't treat it as a failed install.
 
 If the user is on macOS, Windows, or another architecture with no published binary, build from
@@ -49,6 +55,18 @@ Opens a browser for Google/GitHub OAuth against the Kioku dashboard, then stores
 `~/.config/kioku/auth.json`. This requires an interactive browser — don't attempt to script or
 automate it; hand this step to the user and wait for them to complete it.
 
+Google sign-in also requests read-only Calendar access in the same browser flow.
+For a self-hosted deployment, its Google OAuth web client needs these authorized
+redirect URIs (replace the origin with the deployment's dashboard URL):
+
+- `https://dashboard.kioku.chat/api/auth/callback/google` — account sign-in.
+- `https://dashboard.kioku.chat/cli-auth/calendar-callback` — CLI Calendar consent.
+- `https://dashboard.kioku.chat/auth/google-calendar/callback` — Calendar connection
+  for sessions signed in with an API key or GitHub.
+
+If Google reports `redirect_uri_mismatch`, have the user add the exact callback
+URI in their Google client configuration before retrying.
+
 For non-interactive / CI use, sign in with a long-lived API key instead (create one first with
 `kioku keys --create`, from an already-authenticated session):
 
@@ -60,6 +78,10 @@ Verify signin worked: `kioku whoami` (or `kioku --json whoami` for structured ou
 email, role, workspace_id/name/slug, server; deliberately excludes the token itself).
 
 `kioku signout` clears the stored credentials.
+
+If authenticated commands return `401` / `Invalid or expired token`, run
+`kioku signin` again to refresh the session. Preserve the saved profile until the
+user completes sign-in; do not clear it merely to test authentication.
 
 Troubleshooting: if every authenticated command suddenly errors `404 Not Found`, the stored
 session (`~/.config/kioku/auth.json`) likely points at a server that no longer exists — signin
@@ -83,9 +105,9 @@ All of these operate on the user's **active workspace** (see Workspaces below) u
   transcript to the terminal as segments confirm, exiting when the bot leaves — here the id is
   the meet code shown by bare `kioku meet` (e.g. `abc-defg-hij`), and `--json` emits NDJSON.
 - `kioku cal [--week] [--date DD/MM/YYYY]` — lists Google Calendar meetings for today (default),
-  the coming week, or a specific date. First run transparently walks the user through connecting
-  Calendar access (separate consent from the main kioku signin) — again, interactive, hand off
-  to the user.
+  the coming week, or a specific date. Google CLI sign-in connects Calendar access already.
+  Sessions signed in with an API key or GitHub are prompted to connect Calendar on first use;
+  that consent is interactive, so hand it off to the user.
 
 ## Workspaces
 
@@ -107,10 +129,11 @@ Everything above — search, docs, meet — is scoped to whichever workspace is 
 - `kioku keys` — list, `--create --name <n>`, or `--delete <id-or-prefix>` long-lived API keys
   (used for `signin --api-key` or other programmatic access). A newly created key's raw secret
   is only ever shown once at creation time — tell the user to save it immediately.
-- `kioku mcp` — prints an MCP server config block (JSON) wiring an AI client like Claude Desktop
-  or Cursor directly to the user's Kioku knowledge base and meeting tools, using their current
-  auth token. If the user asks to "connect kioku to Claude/Cursor", run this and help them paste
-  the output into that client's MCP config file.
+- `kioku mcp` — prints a JSON config for both the knowledge MCP server
+  (`https://api.kioku.chat/mcp`) and meeting MCP server (`https://mcp.kioku.chat/mcp`),
+  using the current auth token. If the user asks to "connect kioku to Claude/Cursor",
+  help them save it to that client's MCP config file. Treat the generated headers
+  as credentials; avoid printing them in logs or chat.
 - `kioku upgrade` — checks GitHub releases and self-updates if a newer version exists.
 - `kioku --token` — prints the stored auth token. **Never combine this with another subcommand**
   (`kioku --token search ...` is a hard error, by design — the flag is only valid on its own).
